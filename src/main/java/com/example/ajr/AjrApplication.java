@@ -23,4 +23,17 @@ public class AjrApplication {
         return "Hi Katherine, you're a nerd!";
     }
 
+    @RequestMapping("/groceryitem")
+    public GroceryItem getGroceryItemInfo(){
+        GroceryItem gi = new GroceryItem("Apples", 1);
+        return gi;
+    }
+
+    @RequestMapping(value = "/additem", method = RequestMethod.POST)
+    public GroceryItem addGroceryItem(@RequestBody GroceryItem giPost){
+        GroceryItem gi = giPost;
+        return gi;
+    }
+
+
 }
