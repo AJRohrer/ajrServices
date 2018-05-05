@@ -4,6 +4,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+
 @SpringBootApplication
 @RestController
 public class AjrApplication {
@@ -24,9 +26,13 @@ public class AjrApplication {
     }
 
     @RequestMapping("/groceryitem")
-    public GroceryItem getGroceryItemInfo(){
-        GroceryItem gi = new GroceryItem("Apples", 1);
-        return gi;
+    public ArrayList<GroceryItem> getGroceryItemInfo(){
+        ArrayList<GroceryItem> gil = new ArrayList<GroceryItem>();
+        for(int i = 0; i < 10; i++) {
+            GroceryItem gi = new GroceryItem("apple", i);
+            gil.add(i,gi);
+        }
+        return gil;
     }
 
     @RequestMapping(value = "/additem", method = RequestMethod.POST)
