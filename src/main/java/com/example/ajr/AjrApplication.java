@@ -4,6 +4,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 @SpringBootApplication
@@ -41,5 +42,9 @@ public class AjrApplication {
         return gi;
     }
 
-
+    @RequestMapping(value="/solvewordsearch", method = RequestMethod.POST)
+    public ArrayList<Location> solveWordSearch(@RequestParam("WordSearch") String WordSearch, @RequestParam("WordToFind") String WordToFind){
+        WordSearch ws = new WordSearch(WordToFind, WordSearch);
+        return ws.Solve();
+    }
 }
