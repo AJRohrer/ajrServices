@@ -1,5 +1,7 @@
 package com.example.ajr;
 
+import org.graalvm.compiler.word.Word;
+
 import java.util.ArrayList;
 
 final class PuzzleSolver {
@@ -24,7 +26,41 @@ final class PuzzleSolver {
     private static ArrayList<Location> readLefttoRight(char [][] wsArray, String WordToFind){
         ArrayList<Location> locations = new ArrayList<>();
 
+        for (int i = 0; i < wsArray.length; i++){
+            int wordToFindMatchCount = 0;
+            for (int j = 0; j < wsArray[i].length; j++){
 
+                if (wsArray[i][j] == WordToFind.charAt(wordToFindMatchCount)){
+                    boolean isFullMatch = false;
+                    int failedMatchCount = 0;
+
+                    for (int x = j; x < WordToFind.length(); x++){
+                        if (wsArray[i][x] == WordToFind.charAt(wordToFindMatchCount)){
+                            isFullMatch = true;
+                            failedMatchCount++;
+                        } else {
+                            isFullMatch = false;
+                            break;
+                        }
+                    }
+
+                    if (isFullMatch){
+                        for (int x = 0; x < WordToFind.length(); x++){
+                            locations.add(new Location(true, j+x, i));
+                            j++;
+                        }
+                    } else {
+                        for (int x = 0; x < failedMatchCount; x++){
+                            locations.add(new Location(false,j+x, i));
+                            j++;
+                        }
+                    }
+                    wordToFindMatchCount = 0;
+                } else {
+                    locations.add(new Location(false, j, i));
+                }
+            }
+        }
 
         return locations;
     }
