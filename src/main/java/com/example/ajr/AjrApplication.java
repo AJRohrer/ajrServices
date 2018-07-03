@@ -23,7 +23,7 @@ public class AjrApplication {
 
     @RequestMapping("/katherine")
     public String HiKatherine(){
-        return "Hi Katherine, you're a nerd!";
+        return "Hi Katherine, you're a beautiful wife!";
     }
 
     @RequestMapping("/groceryitem")
