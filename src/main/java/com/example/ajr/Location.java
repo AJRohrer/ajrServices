@@ -1,5 +1,7 @@
 package com.example.ajr;
 
+import java.util.Comparator;
+
 public class Location {
     public boolean isUsedLetter = false;
     private int _xPos = -1;
@@ -29,3 +31,4 @@ public class Location {
         return _letter;
     }
 }
+
