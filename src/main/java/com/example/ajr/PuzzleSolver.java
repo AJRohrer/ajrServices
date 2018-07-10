@@ -70,7 +70,9 @@ final class PuzzleSolver {
     private static ArrayList<Location> readBottomtoTop(char [][] wsArray, String WordToFind){
         ArrayList<Location> locations = new ArrayList<>();
 
-
+        for (int i = wsArray.length - 1; i >= 0; i--){
+            for (Location l :)
+        }
 
         return locations;
     }
