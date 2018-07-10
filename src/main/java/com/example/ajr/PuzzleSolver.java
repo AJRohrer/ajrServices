@@ -41,7 +41,7 @@ final class PuzzleSolver {
         for (int i = 0; i < wsArray.length; i++){
 
             for (int j = wsArray[i].length - 1; j >= 0; j--){
-                for (Location l: interateBackwards(i,j,WordToFind,wsArray)){
+                for (Location l: iterateBackwards(i,j,WordToFind,wsArray)){
                     locations.add(l);
                 }
             }
@@ -70,10 +70,13 @@ final class PuzzleSolver {
     private static ArrayList<Location> readBottomtoTop(char [][] wsArray, String WordToFind){
         ArrayList<Location> locations = new ArrayList<>();
 
-        for (int i = wsArray.length - 1; i >= 0; i--){
-            for (Location l :)
+        for (int i = 0; i < wsArray[0].length; i++) {
+            for (int j = wsArray.length - 1; j >= 0; j--) {
+                for (Location l : iterateBackwards(i,j,WordToFind,wsArray)){
+                    locations.add(l);
+                }
+            }
         }
-
         return locations;
     }
 
@@ -121,7 +124,7 @@ final class PuzzleSolver {
         return flippedArray;
     }
 
-    private static ArrayList<Location> interateBackwards(int i, int j, String wordToFind, char [][] wsArray){
+    private static ArrayList<Location> iterateBackwards(int i, int j, String wordToFind, char [][] wsArray){
         ArrayList<Location> locations = new ArrayList<>();
         int wordToFindMatchCount = 0;
         if (wsArray[i][j] == wordToFind.charAt(wordToFindMatchCount)){
