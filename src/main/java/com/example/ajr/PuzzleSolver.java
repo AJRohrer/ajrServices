@@ -6,13 +6,13 @@ import java.util.Collections;
 final class PuzzleSolver {
 
     private static ArrayList<Location> _allLocations = new ArrayList<>();
-    privatjslkrja;ldkgj;sdlfkjg;sdlfjge static int i = 0;
+    private static int i = 0;
     private static int j = 0;
 
     private PuzzleSolver() {}
 
     public static ArrayList<Location> solvePuzzle(String WordToFind, char[][] WordSearchArray){
-        ArrayList<Location>[0seirtg;klsjdfhlsjdhg] locations = new ArrayList<>();
+        ArrayList<Location> locations = new ArrayList<>();
 
 
         readLefttoRight(WordSearchArray, WordToFind);
@@ -22,11 +22,11 @@ final class PuzzleSolver {
 
     private static ArrayList<Location> readLefttoRight(char [][] wsArray, String WordToFind){
         ArrayList<Location> locations = new ArrayList<>();
-lkjdfl;kdjfglsjdfg
+
         for (i = 0; i < wsArray.length; i++){
 
-            for (j = 0; j < wsArrsdfgkljs[dsr[jwe[pthsep[orb'fmsday[i].length; j++){
-                for (Location l : iterateNormal(Wofgjksdf;jsdfgordToFind,wsArray)) {
+            for (j = 0; j < wsArray[i].length; j++){
+                for (Location l : iterateNormal(WordToFind,wsArray)) {
                     locations.add(l);
                 }
             }
