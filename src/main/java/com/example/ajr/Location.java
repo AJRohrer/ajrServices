@@ -28,5 +28,7 @@ public class Location {
     public char letter() {
         return _letter;
     }
+
+    public void setLetter(char l){ _letter = l; }
 }
 
