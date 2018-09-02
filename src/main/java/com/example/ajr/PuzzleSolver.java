@@ -98,18 +98,27 @@ final class PuzzleSolver {
     private static ArrayList<Location> readDownToRight(char [][] wsArray, String WordToFind){
         ArrayList<Location> locations = new ArrayList<>();
 
-        for (i = wsArray.length - WordToFind.length(); i >= 0; i--){
-            j = 0;
-            for (Location l : iterateDownRight(WordToFind,wsArray)){
-                locations.add(l);
+        for (i = wsArray.length - 3; i >= 0; i--){
+            int tempi = i;
+            for (j = 0; j < wsArray[0].length - 1; j++) {
+                for (Location l : iterateDownRight(WordToFind, wsArray, true)) {
+                    locations.add(l);
+                }
+                if (i == wsArray.length) break;
+                if (i == 0) break;
             }
+            i = tempi;
         }
 
-        for(j=1; j < wsArray.length - WordToFind.length(); j++) {
-            i = 0;
-            for(Location l : iterateDownRight(WordToFind,wsArray)){
-                locations.add(l);
+        for(j=1; j < wsArray.length - 1; j++) {
+            int tempj = j;
+            for (i=0; i < wsArray.length - 1; i++) {
+                for (Location l : iterateDownRight(WordToFind, wsArray, false)) {
+                    locations.add(l);
+                }
+                if (j == wsArray.length -3) break;
             }
+            j = tempj;
         }
 
         i = j = 0;
@@ -119,17 +128,22 @@ final class PuzzleSolver {
     private static ArrayList<Location> readDownToLeft(char [][] wsArray, String WordToFind){
         ArrayList<Location> locations = new ArrayList<>();
 
-        for (j = 2; j < wsArray[0].length - WordToFind.length(); j++){
-            i = 0;
-            for (Location l : iterateDownLeft(WordToFind,wsArray)){
-                locations.add(l);
+        for (j = 2; j < wsArray[0].length - 3; j++){
+            for (i = 0; i <= wsArray.length - 1; i++) {
+                for (Location l : iterateDownLeft(WordToFind, wsArray)) {
+                    locations.add(l);
+                }
+                if (j == wsArray[0].length - 3) break;
             }
         }
 
-        for(i=1; i < wsArray.length - WordToFind.length(); i++) {
-            j = wsArray[0].length;
-            for(Location l : iterateDownLeft(WordToFind,wsArray)){
-                locations.add(l);
+        for(i=1; i < wsArray.length - 3; i++) {
+            j = wsArray[0].length - 1;
+            for (j = wsArray.length - 1; j >= 0; j--) {
+                for (Location l : iterateDownLeft(WordToFind, wsArray)) {
+                    locations.add(l);
+                }
+                if (i == wsArray.length - 3) break;
             }
         }
 
@@ -140,17 +154,21 @@ final class PuzzleSolver {
     private static ArrayList<Location> readUpToRight(char [][] wsArray, String WordToFind){
         ArrayList<Location> locations = new ArrayList<>();
 
-        for (i = WordToFind.length() - 1; i < wsArray.length; i++){
-            j = 0;
-            for (Location l : iterateUpRight(WordToFind,wsArray)){
-                locations.add(l);
+        for (i = 2; i < wsArray.length; i++){
+            for (j = 0; j <= wsArray.length - 1; j++) {
+                for (Location l : iterateUpRight(WordToFind, wsArray)) {
+                    locations.add(l);
+                }
+                if (i == wsArray.length - 1) break;
             }
         }
 
-        for(j = 1; j < wsArray[0].length - WordToFind.length(); j++) {
-            i = wsArray.length;
-            for(Location l : iterateUpRight(WordToFind,wsArray)){
-                locations.add(l);
+        for(j = 1; j < wsArray[0].length - 3; j++) {
+            for (i = wsArray.length - 1; i >= 0; i--) {
+                for (Location l : iterateUpRight(WordToFind, wsArray)) {
+                    locations.add(l);
+                }
+                if (j == wsArray[0].length - 3) break;
             }
         }
 
@@ -161,17 +179,21 @@ final class PuzzleSolver {
     private static ArrayList<Location> readUpToLeft(char [][] wsArray, String WordToFind){
         ArrayList<Location> locations = new ArrayList<>();
 
-        for (j = WordToFind.length() - 1; j < wsArray[0].length; j++){
-            i = wsArray.length - 1;
-            for (Location l : iterateUpLeft(WordToFind,wsArray)){
-                locations.add(l);
+        for (j = 2; j <= wsArray[0].length - 1; j++){
+            for (i = wsArray.length - 1; i >= 0; i--) {
+                for (Location l : iterateUpLeft(WordToFind, wsArray)) {
+                    locations.add(l);
+                }
+                if (j == wsArray[0].length) break;
             }
         }
 
-        for(i = wsArray.length - 1; i > WordToFind.length() - 1; i--) {
-            j = wsArray[0].length - 1;
-            for(Location l : iterateUpLeft(WordToFind,wsArray)){
-                locations.add(l);
+        for(i = wsArray.length - 1; i >= 3; i--) {
+            for (j = wsArray[0].length - 1; j >= 0; j--) {
+                for (Location l : iterateUpLeft(WordToFind, wsArray)) {
+                    locations.add(l);
+                }
+                if (i == 3) break;
             }
         }
 
@@ -343,7 +365,7 @@ final class PuzzleSolver {
         return locations;
     }
 
-    private static ArrayList<Location> iterateDownRight(String wordToFind, char[][] wsArray){
+    private static ArrayList<Location> iterateDownRight(String wordToFind, char[][] wsArray, boolean bIsFirstHalf){
         ArrayList<Location> locations = new ArrayList<>();
         int wordToFindMatchCount = 0;
         if (wsArray[i][j] == wordToFind.charAt(wordToFindMatchCount)){
@@ -352,6 +374,10 @@ final class PuzzleSolver {
             int failedMatchCount = 0;
 
             for (int x = 0; x < wordToFind.length(); x++){
+                if (i + x >= wsArray[0].length || j + x >= wsArray.length){
+                    isFullMatch = false;
+                    break;
+                }
                 if (wsArray[i + x][j + x] == wordToFind.charAt(wordToFindMatchCount)){
                     isFullMatch = true;
                     failedMatchCount++;
@@ -367,18 +393,22 @@ final class PuzzleSolver {
                     locations.add(new Location(true, i + x, j + x, wsArray[i + x][j + x]));
                 }
                 i = i + wordToFind.length() - 1;
-                j = j + wordToFind.length() - 1; //subtract one because the for loop will increment it the last required number.
+                j = j + wordToFind.length();
             } else {
                 for (int x = 0; x < failedMatchCount; x++){
                     locations.add(new Location(false,i + x, j + x, wsArray[i + x][j + x]));
                 }
                 i = i + failedMatchCount - 1;
-                j = j + failedMatchCount - 1; //add one because the for loop will increment it the last required number.
+                j = j + failedMatchCount;
             }
 
         } else {
             locations.add(new Location(false, i, j, wsArray[i][j]));
-            //no increment i or j because they will be incremented correctly by the loop calling this function.
+            if (bIsFirstHalf) {
+                i++;
+            } else {
+                j++;
+            }
         }
         return locations;
     }
@@ -392,6 +422,10 @@ final class PuzzleSolver {
             int failedMatchCount = 0;
 
             for (int x = 0; x < wordToFind.length(); x++){
+                if (i + x >= wsArray[0].length || j - x < 0){
+                    isFullMatch = false;
+                    break;
+                }
                 if (wsArray[i + x][j - x] == wordToFind.charAt(wordToFindMatchCount)){
                     isFullMatch = true;
                     failedMatchCount++;
@@ -432,6 +466,10 @@ final class PuzzleSolver {
             int failedMatchCount = 0;
 
             for (int x = 0; x < wordToFind.length(); x++){
+                if (i - x < 0 || j + x >= wsArray.length){
+                    isFullMatch = false;
+                    break;
+                }
                 if (wsArray[i - x][j + x] == wordToFind.charAt(wordToFindMatchCount)){
                     isFullMatch = true;
                     failedMatchCount++;
@@ -472,6 +510,10 @@ final class PuzzleSolver {
             int failedMatchCount = 0;
 
             for (int x = 0; x < wordToFind.length(); x++){
+                if (i - x >= 0 || j - x >= 0){
+                    isFullMatch = false;
+                    break;
+                }
                 if (wsArray[i - x][j - x] == wordToFind.charAt(wordToFindMatchCount)){
                     isFullMatch = true;
                     failedMatchCount++;
