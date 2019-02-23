@@ -1,5 +1,6 @@
 package com.example.ajr;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -11,31 +12,257 @@ final class PuzzleSolver {
 
     private PuzzleSolver() {}
 
-    private static void InitializeAllLocations(char [][] wsArray){
-        for (int x = 0; x < wsArray.length; x++){
-            for (int y = 0; y < wsArray[0].length; y++){
-                _allLocations.add(new Location(false,x,y,wsArray[x][y]));
-            }
-        }
-    }
 
     public static ArrayList<Location> solvePuzzle(String WordToFind, char[][] WordSearchArray){
-        ArrayList<Location> locations = new ArrayList<>();
+        ArrayList<ArrayList<Location>> locations = new ArrayList<>();
 
-        InitializeAllLocations(WordSearchArray);
+        locations = getAllStrings(WordSearchArray);
 
-        InsertMoreLocations(readLeftToRight(WordSearchArray, WordToFind));
-        InsertMoreLocations(readRightToLeft(WordSearchArray, WordToFind));
-        InsertMoreLocations(readTopToBottom(WordSearchArray, WordToFind));
-        InsertMoreLocations(readBottomToTop(WordSearchArray, WordToFind));
-        InsertMoreLocations(readDownToRight(WordSearchArray, WordToFind));
-        InsertMoreLocations(readDownToLeft(WordSearchArray, WordToFind));
-        InsertMoreLocations(readUpToRight(WordSearchArray, WordToFind));
-        InsertMoreLocations(readUpToLeft(WordSearchArray, WordToFind));
+
 
         return _allLocations;
     }
 
+    private static void findAndAddLocations(ArrayList<Location> locList){
+
+    }
+
+
+    private static ArrayList<ArrayList<Location>> getAllStrings(char[][] wsArray){
+        ArrayList<ArrayList<Location>> allStrings = new ArrayList<>();
+
+        allStrings.add(leftToRightLocations(wsArray));
+        allStrings.add(rightToLeftLocations(wsArray));
+        allStrings.add(topToBottomLocations(wsArray));
+        allStrings.add(bottomToTopLocations(wsArray));
+        allStrings.add(upToRightLocations(wsArray));
+        allStrings.add(upToLeftLocations(wsArray));
+        allStrings.add(downToLeftLocations(wsArray));
+        allStrings.add(downToRightLocations(wsArray));
+
+        return allStrings;
+    }
+
+    private static ArrayList<Location> leftToRightLocations(char[][] wsArray){
+        ArrayList<Location> leftToRight = new ArrayList<Location>();
+
+        for (int x = 0; x < wsArray.length; x++){
+            for (int z = 0; z < wsArray[0].length; z++){
+                leftToRight.add(new Location(false,x,z,wsArray[x][z]));
+            }
+        }
+        return leftToRight;
+    }
+
+    private static ArrayList<Location> rightToLeftLocations(char[][] wsArray){
+        ArrayList<Location> rightToLeft = new ArrayList<Location>();
+
+        for (int x = 0; x < wsArray.length; x++){
+            for (int z = wsArray[0].length -1; z >= 0; z--){
+                rightToLeft.add(new Location(false,x,z, wsArray[x][z]));
+            }
+        }
+        return rightToLeft;
+    }
+
+    private static ArrayList<Location> topToBottomLocations(char[][]wsArray){
+        ArrayList<Location> topToBottom = new ArrayList<Location>();
+
+        for (int x = 0; x < wsArray[0].length; x++){
+            for(int z = 0; z < wsArray.length; z++){
+                topToBottom.add(new Location(false,z,x,wsArray[z][x]));
+            }
+        }
+        return topToBottom;
+    }
+
+    private static ArrayList<Location> bottomToTopLocations(char[][]wsArray) {
+        ArrayList<Location> bottomToTop = new ArrayList<Location>();
+
+        for (int x = wsArray[0].length -1; x >= 0; x--){
+            for (int z = wsArray.length -1; z >= 0; z--){
+                bottomToTop.add(new Location(false,z,x,wsArray[z][x]));
+            }
+        }
+        return bottomToTop;
+    }
+
+    private static ArrayList<Location> downToRightLocations(char[][] wsArray){
+        ArrayList<Location> downToRight = new ArrayList<>();
+
+        for (int z = wsArray[0].length - 3; z >=0; z--){
+
+        }
+
+
+        for (int x = wsArray.length-3; x >=0; x--){
+            int tempx = x;
+            for (int z = 0; z < wsArray[0].length; z++){
+                downToRight.add(new Location(false,x,z, wsArray[x][z]));
+                x++;
+                if (x > wsArray.length - 1) break;
+            }
+            x = tempx;
+        }
+
+        for (int z = 1; z <= wsArray[0].length; z++){
+            int tempz = z;
+
+            for(int x = 0; x < wsArray.length-1;x++){
+                downToRight.add(new Location(false,x,z,wsArray[x][z]));
+                z++;
+                if (z > wsArray[0].length-1) break;
+            }
+
+            z = tempz;
+        }
+
+        return downToRight;
+    }
+
+    private static ArrayList<Location> downToLeftLocations(char[][] wsArray){
+        ArrayList<Location> downtoLeft = new ArrayList<>();
+
+        for(int z  = 2; z < wsArray[0].length; z++){
+            int tempz = z;
+            for (int x  = 0; x < wsArray.length; x++){
+                downtoLeft.add(new Location(false, x,z,wsArray[x][z]));
+                z--;
+                if (z < 0) break;
+            }
+            z = tempz;
+        }
+
+        for (int x = 1; x <= wsArray.length - 3; x++){
+            int tempx = x;
+
+            for (int z = wsArray[0].length-1; z >=0;z--){
+                downtoLeft.add(new Location(false,x,z,wsArray[x][z]));
+                x++;
+                if (x > wsArray.length - 1) break;
+            }
+
+            x = tempx;
+        }
+
+        return downtoLeft;
+    }
+
+    private static ArrayList<Location> upToRightLocations(char[][] wsArray){
+        ArrayList<Location> upToRight = new ArrayList<>();
+
+        for (int x = wsArray.length-1; x >= 2; x--){
+            int tempx = x;
+
+            for (int z = 0; z < wsArray[0].length; z++){
+                upToRight.add(new Location(false,x,z,wsArray[x][z]));
+                x--;
+                if (x < 0) break;
+            }
+
+            x = tempx;
+        }
+
+        for (int z = 1; z < wsArray[0].length-2;z++){
+            int tempz = z;
+
+            for(int x = wsArray.length-1;x >= 0; x--){
+                upToRight.add(new Location(false,x,z,wsArray[x][z]));
+                z++;
+                if (z > wsArray[0].length -1) break;
+            }
+
+            z = tempz;
+        }
+
+        return upToRight;
+    }
+
+    private static ArrayList<Location> upToLeftLocations(char[][] wsArray){
+        ArrayList<Location> upToLeft = new ArrayList<>();
+
+        for (int z = 2; z < wsArray[0].length; z++){
+            int tempz = z;
+            for (int x = wsArray.length-1; x >= 0; x--){
+                upToLeft.add(new Location(false, x,z,wsArray[x][z]));
+                z--;
+                if (z < 0) break;
+            }
+            z = tempz;
+        }
+
+        for (int x = wsArray.length-2; x >= 2; x--){
+            int tempx = x;
+
+            for (int z = wsArray[0].length -1; z >=0; z--){
+                upToLeft.add(new Location(false,x,z,wsArray[x][z]));
+                x--;
+                if (x < 0) break;
+            }
+
+            x = tempx;
+        }
+        return upToLeft;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //----------------------------------------------------------------------------------------------------------------------------
     private static ArrayList<Location> readLeftToRight(char [][] wsArray, String WordToFind){
         ArrayList<Location> locations = new ArrayList<>();
 
