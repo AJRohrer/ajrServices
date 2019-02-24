@@ -18,8 +18,6 @@ final class PuzzleSolver {
 
         locations = getAllStrings(WordSearchArray);
 
-
-
         return _allLocations;
     }
 
@@ -91,30 +89,27 @@ final class PuzzleSolver {
         ArrayList<Location> downToRight = new ArrayList<>();
 
         for (int z = wsArray[0].length - 3; z >=0; z--){
-
-        }
-
-
-        for (int x = wsArray.length-3; x >=0; x--){
-            int tempx = x;
-            for (int z = 0; z < wsArray[0].length; z++){
-                downToRight.add(new Location(false,x,z, wsArray[x][z]));
-                x++;
-                if (x > wsArray.length - 1) break;
-            }
-            x = tempx;
-        }
-
-        for (int z = 1; z <= wsArray[0].length; z++){
             int tempz = z;
 
-            for(int x = 0; x < wsArray.length-1;x++){
-                downToRight.add(new Location(false,x,z,wsArray[x][z]));
+            for (int x = 0; x < wsArray.length; x++){
+                downToRight.add(new Location(false, x,z,wsArray[x][z]));
                 z++;
-                if (z > wsArray[0].length-1) break;
+                if (z > wsArray[0].length - 1) break;
             }
 
             z = tempz;
+        }
+
+        for (int x = 1; x <= wsArray.length - 3; x++){
+            int tempx = x;
+
+            for (int z = 0; z < wsArray[0].length; z++){
+                downToRight.add(new Location(false,x,z,wsArray[x][z]));
+                x++;
+                if (x > wsArray.length - 1) break;
+            }
+
+            x = tempx;
         }
 
         return downToRight;
