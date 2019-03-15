@@ -17,6 +17,8 @@ public class Location {
         return isUsedLetter;
     }
 
+    public void setIsUsedLetter(boolean value) { isUsedLetter = value; }
+
     public int ele1() {
         return _ele1;
     }
