@@ -24,9 +24,7 @@ final class PuzzleSolver {
     }
 
     private static ArrayList<ArrayList<Location>> findAndAddLocations(ArrayList<ArrayList<Location>> arrStrings, char[][] wsArray, String wordToFind){
-        ArrayList<ArrayList<Location>> wsBase = new ArrayList<>();
-
-        wsBase = arrStrings;
+        ArrayList<ArrayList<Location>> wsBase = arrStrings;
 
         //loop through each array of positions (strings) generated from each possible direction.
         for (int x = 0; x < arrStrings.size();x++){
@@ -55,9 +53,8 @@ final class PuzzleSolver {
                     }
                     strLocCount = strLocCount + wordToFind.length();
 
-                } else {
-                    strLocCount++;
                 }
+                //just increment if the letter doesnt match what we're trying to find.
             }
         }
 
