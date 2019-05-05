@@ -22,23 +22,41 @@ final class PuzzleSolver {
     }
 
     private static ArrayList<Location> makeFinalList(ArrayList<ArrayList<Location>> allSolvedLocations){
-        ArrayList<Location> finalsolvedLocations = new ArrayList<>();
+        ArrayList<Location> finalSolvedLocations = new ArrayList<>();
 
         for (ArrayList<Location> locList : allSolvedLocations){
             for (Location loc : locList) {
-                if (!locListContains(loc, finalsolvedLocations)){
-                    finalsolvedLocations.add(loc);
+
+                boolean locExists = false;
+                for (int i = 0; i < finalSolvedLocations.size(); i++){
+                    Location lToTest = finalSolvedLocations.get(i);
+                    if (loc.ele1() == lToTest.ele1() && loc.ele2() == lToTest.ele2()){
+                        if (loc.isUsedLetter == true && lToTest.isUsedLetter == false){
+                            finalSolvedLocations.get(i).isUsedLetter = true;
+                        }
+                        locExists = true;
+                    }
                 }
+
+                if (locExists == false) finalSolvedLocations.add(loc);
+
             }
         }
 
-        return finalsolvedLocations;
+        return finalSolvedLocations;
     }
 
-    private static boolean locListContains(Location l, ArrayList<Location> locations){
-        boolean locationExists = false;
-       //for ()
-            return locationExists;
+    private static boolean locListContains(Location loc, ArrayList<Location> finalSolvedLocations){
+        for (int i = 0; i < finalSolvedLocations.size(); i++){
+            Location lToTest = finalSolvedLocations.get(i);
+            if (loc.ele1() == lToTest.ele1() && loc.ele2() == lToTest.ele2()){
+                if (loc.isUsedLetter == false && lToTest.isUsedLetter == true){
+                    finalSolvedLocations.get(i).isUsedLetter = true;
+                }
+                return true;
+            }
+        }
+        return false;
     }
 
     private static ArrayList<ArrayList<Location>> findAndAddLocations(ArrayList<ArrayList<Location>> arrStrings, char[][] wsArray, String wordToFind){

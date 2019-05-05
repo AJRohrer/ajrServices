@@ -28,7 +28,7 @@ public class AjrApplication {
 
     @RequestMapping("/groceryitem")
     public ArrayList<GroceryItem> getGroceryItemInfo(){
-        ArrayList<GroceryItem> gil = new ArrayList<GroceryItem>();
+        ArrayList<GroceryItem> gil = new ArrayList<>();
         for(int i = 0; i < 10; i++) {
             GroceryItem gi = new GroceryItem("apple", i);
             gil.add(i,gi);

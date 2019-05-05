@@ -2,9 +2,9 @@ package com.example.ajr;
 
 public class Location {
     public boolean isUsedLetter = false;
-    private int _ele1 = -1;
-    private int _ele2 = -1;
-    private char _letter;
+    public int _ele1 = -1;
+    public int _ele2 = -1;
+    public char _letter;
 
     public Location(boolean isUsed, int ele1, int ele2, char letterChar){
         isUsedLetter = isUsed;
