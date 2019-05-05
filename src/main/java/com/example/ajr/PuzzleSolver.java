@@ -14,18 +14,34 @@ final class PuzzleSolver {
 
 
     public static ArrayList<Location> solvePuzzle(String WordToFind, char[][] WordSearchArray){
-        ArrayList<ArrayList<Location>> locations = new ArrayList<>();
+        ArrayList<ArrayList<Location>> locations = getAllStrings(WordSearchArray);
 
-        locations = getAllStrings(WordSearchArray);
+        ArrayList<ArrayList<Location>> allSolvedLocations = findAndAddLocations(locations,WordSearchArray,WordToFind);
 
-        findAndAddLocations(locations,WordSearchArray,WordToFind);
+        return makeFinalList(allSolvedLocations);
+    }
 
-        return _allLocations;
+    private static ArrayList<Location> makeFinalList(ArrayList<ArrayList<Location>> allSolvedLocations){
+        ArrayList<Location> finalsolvedLocations = new ArrayList<>();
+
+        for (ArrayList<Location> locList : allSolvedLocations){
+            for (Location loc : locList) {
+                if (!locListContains(loc, finalsolvedLocations)){
+                    finalsolvedLocations.add(loc);
+                }
+            }
+        }
+
+        return finalsolvedLocations;
+    }
+
+    private static boolean locListContains(Location l, ArrayList<Location> locations){
+        boolean locationExists = false;
+       //for ()
+            return locationExists;
     }
 
     private static ArrayList<ArrayList<Location>> findAndAddLocations(ArrayList<ArrayList<Location>> arrStrings, char[][] wsArray, String wordToFind){
-        ArrayList<ArrayList<Location>> wsBase = arrStrings;
-
         //loop through each array of positions (strings) generated from each possible direction.
         for (int x = 0; x < arrStrings.size();x++){
             int wordToFindCount = 0;
@@ -34,21 +50,27 @@ final class PuzzleSolver {
             //loop through the positions of each string
             for (int strLocCount = 0; strLocCount < arrStrings.get(x).size(); strLocCount++){
                 //if the current letter matches the first letter of the word to find
-                if (arrStrings.get(x).get(strLocCount).letter() == wordToFind.charAt(wordToFindCount)){
+                 if (arrStrings.get(x).get(strLocCount).letter() == wordToFind.charAt(wordToFindCount)){
 
                     //peek ahead without incrementing strLocCount to see if there is a full match.
-                    for (int matchCount = 1; matchCount <= wordToFind.length(); matchCount++){
-                        if (arrStrings.get(x).get(strLocCount + matchCount).letter() == wordToFind.charAt(wordToFindCount + matchCount)){
-                            fullMatchFound = true;
+                    for (int matchCount = 0; matchCount < wordToFind.length(); matchCount++){
+                        //if we aren't at the end of the array
+                        if (arrStrings.get(x).size() - 1  >= strLocCount + matchCount) {
+                            if (arrStrings.get(x).get(strLocCount + matchCount).letter() == wordToFind.charAt(wordToFindCount + matchCount)) {
+                                fullMatchFound = true;
+                            } else {
+                                fullMatchFound = false;
+                            }
                         } else {
                             fullMatchFound = false;
+                            break;
                         }
                     }
                     //if there is a full match to the word to find flip all locations to true
                     if (fullMatchFound == true){
                         for (int i = 0; i < wordToFind.length();i++){
                             //flip the locations to true that are used
-                            wsBase.get(x + i).get(strLocCount + i).setIsUsedLetter(true);
+                            arrStrings.get(x).get(strLocCount + i).setIsUsedLetter(true);
                         }
                     }
                     strLocCount = strLocCount + wordToFind.length();
@@ -58,7 +80,7 @@ final class PuzzleSolver {
             }
         }
 
-        return wsBase;
+        return arrStrings;
     }
 
 
@@ -107,12 +129,13 @@ final class PuzzleSolver {
 
     private static ArrayList<ArrayList<Location>> rightToLeftLocations(char[][] wsArray){
         ArrayList<ArrayList<Location>> allRightToLeft = new ArrayList<>();
-        ArrayList<Location> rightToLeft = new ArrayList<Location>();
+        ArrayList<Location> rightToLeft = new ArrayList<>();
 
         for (int x = 0; x < wsArray.length; x++){
             for (int z = wsArray[0].length -1; z >= 0; z--){
                 rightToLeft.add(new Location(false,x,z, wsArray[x][z]));
             }
+            //reverse line order to read lef to right, locations are still remembered where they originally were
             allRightToLeft.add(addLineToAggregateList(rightToLeft));
             rightToLeft.clear();
         }
