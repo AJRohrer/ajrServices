@@ -2,9 +2,9 @@ package com.example.ajr;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 @SpringBootApplication
@@ -42,9 +42,10 @@ public class AjrApplication {
         return gi;
     }
 
+    @CrossOrigin(origins = "*")
     @RequestMapping(value="/solvewordsearch", method = RequestMethod.POST)
-    public ArrayList<Location> solveWordSearch(@RequestParam("WordSearch") String WordSearch, @RequestParam("WordToFind") String WordToFind){
-        WordSearch ws = new WordSearch(WordToFind, WordSearch);
+    public ArrayList<Location> solveWordSearch(WordSearchRequest wsr){
+        WordSearch ws = new WordSearch(wsr.getWordToFind(), wsr.getWordSearch());
         return ws.Solve();
     }
 }
