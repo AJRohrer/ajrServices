@@ -9,9 +9,9 @@ $(document).ready(function(){
                 JSON.stringify({
                     WordToFind: $('#tbwordtofind').val().trim(),
                     WordSearch: $('#tbwordsearch').val().trim()
-                    
                 }),
             accept: "application/json",
+            contentType: "application/json",
             dataType:"json",
             success: function(data, status){
                 console.log("The request was successful");

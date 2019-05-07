@@ -1,15 +1,15 @@
 package com.example.ajr;
 
 public class WordSearchRequest {
-    private String wordToFind = "";
-    private String wordSearch = "";
+    public String WordToFind;
+    public String WordSearch;
 
     public WordSearchRequest(String findWord, String wsMatrix){
-        wordToFind = findWord;
-        wordSearch = wsMatrix;
+        WordToFind = findWord;
+        WordSearch = wsMatrix;
     }
 
-    public String getWordToFind(){return wordToFind;}
-    public String getWordSearch(){return wordSearch;}
+    public String getWordToFind(){return WordToFind;}
+    public String getWordSearch(){return WordSearch;}
 
 }

@@ -14,7 +14,7 @@ public class WordSearch {
         _wordToFind = WordToFind;
         _wordSearch = WordSearch;
 
-        ArrayList<String> lines = new ArrayList<>(Arrays.asList(_wordSearch.split("\\r\\n")));
+        ArrayList<String> lines = new ArrayList<>(Arrays.asList(_wordSearch.split("\\n")));
 
         //_wordSearchArray[rows, number of rows][columns, number of letters in each row]
         _wordSearchArray = new char[lines.size()][lines.get(0).length()];

@@ -2,7 +2,6 @@ package com.example.ajr;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -44,7 +43,8 @@ public class AjrApplication {
 
     @CrossOrigin(origins = "*")
     @RequestMapping(value="/solvewordsearch", method = RequestMethod.POST)
-    public ArrayList<Location> solveWordSearch(WordSearchRequest wsr){
+    public ArrayList<Location> solveWordSearch(@RequestBody WordSearchRequest wsr){
+
         WordSearch ws = new WordSearch(wsr.getWordToFind(), wsr.getWordSearch());
         return ws.Solve();
     }
