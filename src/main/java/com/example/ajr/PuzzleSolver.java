@@ -69,7 +69,7 @@ final class PuzzleSolver {
             for (int strLocCount = 0; strLocCount < arrStrings.get(x).size(); strLocCount++){
                 //if the current letter matches the first letter of the word to find
                  if (arrStrings.get(x).get(strLocCount).letter() == wordToFind.charAt(wordToFindCount)){
-
+                    int finalMatchCount = 0;
                     //peek ahead without incrementing strLocCount to see if there is a full match.
                     for (int matchCount = 0; matchCount < wordToFind.length(); matchCount++){
                         //if we aren't at the end of the array
@@ -82,6 +82,7 @@ final class PuzzleSolver {
                             }
                         } else {
                             fullMatchFound = false;
+                            finalMatchCount = matchCount;
                             break;
                         }
                     }
@@ -91,8 +92,11 @@ final class PuzzleSolver {
                             //flip the locations to true that are used
                             arrStrings.get(x).get(strLocCount + i).setIsUsedLetter(true);
                         }
+                        strLocCount = strLocCount + wordToFind.length() - 1;
+                    } else {
+                        strLocCount = strLocCount + finalMatchCount;
                     }
-                    strLocCount = strLocCount + wordToFind.length();
+
 
                 }
                 //just increment if the letter doesnt match what we're trying to find.
