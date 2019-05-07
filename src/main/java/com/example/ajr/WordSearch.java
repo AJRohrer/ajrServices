@@ -12,7 +12,7 @@ public class WordSearch {
 
     public WordSearch(String WordToFind, String WordSearch){
         _wordToFind = WordToFind;
-        _wordSearch = WordSearch;
+        _wordSearch = WordSearchCleaner.cleanWordSearch(WordSearch);
 
         ArrayList<String> lines = new ArrayList<>(Arrays.asList(_wordSearch.split("\\n")));
 
