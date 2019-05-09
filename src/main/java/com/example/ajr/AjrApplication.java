@@ -45,7 +45,7 @@ public class AjrApplication {
     @RequestMapping(value="/solvewordsearch", method = RequestMethod.POST)
     public ArrayList<Location> solveWordSearch(@RequestBody WordSearchRequest wsr){
 
-        WordSearch ws = new WordSearch(wsr.getWordToFind(), wsr.getWordSearch());
+        WordSearch ws = new WordSearch(wsr.getWordToFind().toUpperCase(), wsr.getWordSearch().toUpperCase());
         return ws.Solve();
     }
 }
