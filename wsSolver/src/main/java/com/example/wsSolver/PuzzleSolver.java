@@ -13,12 +13,14 @@ final class PuzzleSolver {
     private PuzzleSolver() {}
 
 
-    public static ArrayList<Location> solvePuzzle(String WordToFind, char[][] WordSearchArray){
+    public static WordSearchSolution solvePuzzle(String WordToFind, char[][] WordSearchArray){
         ArrayList<ArrayList<Location>> locations = getAllStrings(WordSearchArray);
 
-        ArrayList<ArrayList<Location>> allSolvedLocations = findAndAddLocations(locations,WordSearchArray,WordToFind);
+        WordSearchSolution wss = findAndAddLocations(locations,WordSearchArray,WordToFind);
 
-        return makeFinalList(allSolvedLocations);
+        wss.setFinalSolvedWordSearch(makeFinalList(wss.getAllSolvedLocations()));
+
+        return wss;
     }
 
     private static ArrayList<Location> makeFinalList(ArrayList<ArrayList<Location>> allSolvedLocations){
@@ -59,7 +61,8 @@ final class PuzzleSolver {
         return false;
     }
 
-    private static ArrayList<ArrayList<Location>> findAndAddLocations(ArrayList<ArrayList<Location>> arrStrings, char[][] wsArray, String wordToFind){
+    private static WordSearchSolution findAndAddLocations(ArrayList<ArrayList<Location>> arrStrings, char[][] wsArray, String wordToFind){
+        int wordFoundCount = 0;
         //loop through each array of positions (strings) generated from each possible direction.
         for (int x = 0; x < arrStrings.size();x++){
             int wordToFindCount = 0;
@@ -88,6 +91,7 @@ final class PuzzleSolver {
                     }
                     //if there is a full match to the word to find flip all locations to true
                     if (fullMatchFound == true){
+                        wordFoundCount++;
                         for (int i = 0; i < wordToFind.length();i++){
                             //flip the locations to true that are used
                             arrStrings.get(x).get(strLocCount + i).setIsUsedLetter(true);
@@ -103,7 +107,7 @@ final class PuzzleSolver {
             }
         }
 
-        return arrStrings;
+        return new WordSearchSolution(arrStrings, wordFoundCount);
     }
 
 

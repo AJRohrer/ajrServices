@@ -3,6 +3,8 @@ package com.example.wsSolver;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 public class WsController {
@@ -37,9 +39,11 @@ public class WsController {
 
     @CrossOrigin(origins = "*")
     @RequestMapping(value="/solvewordsearch", method = RequestMethod.POST)
-    public ArrayList<Location> solveWordSearch(@RequestBody WordSearchRequest wsr){
+    public WordSearchSolution solveWordSearch(@RequestBody WordSearchRequest wsr){
 
         WordSearch ws = new WordSearch(wsr.getWordToFind().toUpperCase(), wsr.getWordSearch().toUpperCase());
-        return ws.Solve();
+        WordSearchSolution wss = ws.Solve();
+
+        return wss;
     }
 }

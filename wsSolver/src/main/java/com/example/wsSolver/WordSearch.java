@@ -27,7 +27,7 @@ public class WordSearch {
 
     }
 
-    public ArrayList<Location> Solve(){
+    public WordSearchSolution Solve(){
         return PuzzleSolver.solvePuzzle(_wordToFind, _wordSearchArray);
     }
 }
