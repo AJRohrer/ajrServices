@@ -1,4 +1,4 @@
-var hostURL = "http://localhost:8080/wsSolver-ROOT/"
+var hostURL = "http://localhost:8080/" //wsSolver-ROOT/
 $(document).ready(function(){
 
     $("#btnSolveWordSearch").on("click", function(){
@@ -27,23 +27,23 @@ $(document).ready(function(){
 });
 
 
-function drawSolution(wordSearchLocations, wordSearchWidth){
-    console.log(wordSearchWidth);
+function drawSolution(data, wordSearchWidth){
     var htmlString="";
-    for (i = 0; i < wordSearchLocations.length; i++){
+    for (i = 0; i < data.finalSolvedWordSearch.length; i++){
         if (i != 0){
             if (i % wordSearchWidth == 0){
                 htmlString += "<br>";
             }
         }
         var spantag = "";
-        if(wordSearchLocations[i].isUsedLetter == true){
+        if(data.finalSolvedWordSearch[i].isUsedLetter == true){
             spantag = "<span class=\"letter usedletter\">";
         } else {
             spantag = "<span class=\"letter\">";
         }
 
-        htmlString += spantag + wordSearchLocations[i]._letter + "</span>";
+        htmlString += spantag + data.finalSolvedWordSearch[i]._letter + "</span>";
     }
     $('#wordSearchSolution').html(htmlString);
+    $('#wordCount').html($('#tbwordtofind').val() + " count: " + data.numberOfWords);
 }

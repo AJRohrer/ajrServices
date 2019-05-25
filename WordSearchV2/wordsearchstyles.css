@@ -3,11 +3,23 @@
     flex-wrap: wrap;
 }
 
+.ajr-container-column {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
+
 .ajr-item {
     border-style: dotted;
     flex-grow: 1;
     width: 35%;
     min-height: 600px;
+}
+
+.ajr-item-100 {
+    border-style: dotted;
+    flex-grow: 1;
+    width: 99%;
 }
 
 .ajr-resizeable-textarea {

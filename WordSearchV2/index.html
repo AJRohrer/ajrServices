@@ -11,13 +11,27 @@
         <p>Type Word to Find Here:</p>
         <p><input id="tbwordtofind" type="text" name="WordToFind"></p>
         <p>Copy and Paste Word Search Here:</p>
+
         <section class="ajr-container">
             <article class="ajr-item">
-                <textarea id="tbwordsearch" name="WordSearch" class="ajr-resizeable-textarea"></textarea>
+                <section class="ajr-container">
+                    <article class="ajr-item">
+                        <textarea id="tbwordsearch" name="WordSearch" class="ajr-resizeable-textarea"></textarea>
+                    </article>
+                </section>
             </article>
+
             <article class="ajr-item">
-                <div id="wordSearchSolution"></div>
+                    <section class="ajr-container-column">
+                        <article class="ajr-item-100" style="min-height: 15px;border-style:none;">
+                            <div id="wordCount"></div>
+                        </article>
+                        <article class="ajr-item-100" style="min-height: 585px;">
+                            <div id="wordSearchSolution"></div>
+                        </article>
+                    </section>
             </article>
+            
         </section>
         <p><button id="btnSolveWordSearch" type="submit" name ="btnSolve">Solve</button></p>
         <p id="wordsearchsolution"></p>
