@@ -1,4 +1,4 @@
-var hostURL = "http://localhost:8080/" //wsSolver-ROOT/
+var hostURL = "http://localhost:8080/wsSolver-ROOT/";
 $(document).ready(function(){
 
     $("#btnSolveWordSearch").on("click", function(){
